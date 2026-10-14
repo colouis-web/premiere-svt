@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TP – La cellule à toutes les échelles</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#12303a; --muted:#4d6670; --teal:#0f766e; --teal-d:#0b4f4a; --bg:#f2f6f5; --card:#fff;
+  --line:#d3dedb; --orange:#e07a1f; --blue:#2b7bb9; --green:#5b9a3c; --red:#c0392b;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:'Roboto Condensed',system-ui,sans-serif;font-size:17px;line-height:1.5;color:var(--ink);background:var(--bg)}
+header{background:linear-gradient(135deg,var(--teal-d),var(--teal));color:#fff;padding:2.2rem 1rem 1.6rem}
+header .in,main,footer .in{max-width:980px;margin:0 auto}
+header h1{margin:0 0 .3rem;font-size:2.1rem;font-weight:700;letter-spacing:.2px}
+header p{margin:0;font-weight:300;font-size:1.1rem;opacity:.92}
+nav{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid var(--line);overflow-x:auto;white-space:nowrap}
+nav .in{max-width:980px;margin:0 auto;display:flex;gap:.2rem;padding:0 .5rem}
+nav a{padding:.65rem .8rem;color:var(--teal-d);text-decoration:none;font-weight:700;font-size:.95rem}
+nav a:hover{background:var(--bg)}
+main{padding:1rem}
+section{margin:1.2rem 0 2.2rem}
+h2{font-size:1.55rem;margin:0 0 .6rem;color:var(--teal-d);border-left:6px solid var(--orange);padding-left:.6rem}
+h3{font-size:1.15rem;margin:1.1rem 0 .4rem;color:var(--teal-d)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:1rem;margin:.8rem 0}
+.note{background:#fff6e8;border-left:5px solid var(--orange);padding:.6rem .8rem;border-radius:6px;font-size:.95rem;margin:.8rem 0}
+.grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+table{width:100%;border-collapse:collapse;font-size:.95rem;background:#fff}
+th,td{border:1px solid var(--line);padding:.45rem .55rem;text-align:left;vertical-align:top}
+th{background:var(--teal);color:#fff;font-weight:700}
+tr:nth-child(even) td{background:#f7faf9}
+.scroll{overflow-x:auto}
+svg{max-width:100%;height:auto;display:block;margin:0 auto}
+svg text{font-family:'Roboto Condensed',system-ui,sans-serif;fill:var(--ink)}
+figure{margin:0;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+figure img{display:block;width:100%;height:210px;object-fit:cover;background:#111}
+figcaption{padding:.6rem .8rem;font-size:.9rem}
+figcaption b{color:var(--teal-d)}
+.tag{display:inline-block;font-size:.78rem;font-weight:700;padding:.05rem .45rem;border-radius:99px;color:#fff;margin-right:.3rem}
+.t-opt{background:var(--blue)} .t-met{background:#6a4c93} .t-meb{background:var(--orange)}
+.fb{height:210px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:1rem;background:repeating-linear-gradient(45deg,#eef3f2,#eef3f2 10px,#e5ecea 10px,#e5ecea 20px);color:var(--muted);font-size:.92rem}
+.fb a{color:var(--teal-d);font-weight:700}
+label{font-weight:700;font-size:.92rem;display:block;margin:.4rem 0 .15rem}
+input[type=number],input[type=range],select{font-family:inherit;font-size:1rem;padding:.35rem .5rem;border:1px solid var(--line);border-radius:6px;width:100%}
+.out{margin-top:.6rem;padding:.6rem .8rem;background:#e8f4f2;border-radius:8px;font-weight:700}
+details{background:#fff;border:1px solid var(--line);border-radius:10px;margin:.6rem 0;padding:.1rem .8rem}
+summary{cursor:pointer;font-weight:700;padding:.55rem 0;color:var(--teal-d)}
+details .ans{padding:.2rem 0 .8rem;font-size:.97rem}
+details ul{margin:.3rem 0 .3rem 1.1rem;padding:0}
+footer{background:var(--ink);color:#cfe0dc;padding:1.2rem 1rem;font-size:.88rem}
+footer a{color:#9fe0d3}
+.legend span{display:inline-flex;align-items:center;gap:.3rem;margin-right:.8rem;font-size:.9rem}
+.legend i{width:12px;height:12px;border-radius:50%;display:inline-block}
+@media print{nav{display:none}.card,figure,details{break-inside:avoid}}
+</style>
+</head>
+<body>
+
+<header><div class="in">
+  <h1>La cellule, de l'organisme à la molécule</h1>
+  <p>TP de 1<sup>re</sup> – microscopie optique, électronique à transmission et à balayage · échelles · membrane plasmique</p>
+</div></header>
+
+<nav><div class="in">
+  <a href="#echelles">Échelles</a><a href="#microscopes">Microscopes</a><a href="#calcul">Calculs</a>
+  <a href="#photos">Observations</a><a href="#cellules">Schémas de cellules</a>
+  <a href="#membrane">Membrane</a><a href="#sujets">Sujets types</a><a href="#sources">Sources</a>
+</div></nav>
+
+<main>
+
+<!-- ============ ÉCHELLES ============ -->
+<section id="echelles">
+  <h2>1. Les échelles du vivant</h2>
+  <p>Passer d'un instrument à l'autre, c'est changer d'échelle. Repère : <b>1 mm = 1 000 µm</b> et <b>1 µm = 1 000 nm</b>.</p>
+  <div class="card scroll"><svg id="scaleSvg" viewBox="0 0 880 430" role="img" aria-label="Échelle logarithmique de 0,1 nm à 1 mm"></svg></div>
+  <div class="note">Axe <b>logarithmique</b> : chaque graduation est 10 fois plus grande que la précédente. Les barres du bas donnent des ordres de grandeur du domaine d'observation de chaque microscope (ils varient selon l'appareil et la préparation).</div>
+  <div class="card scroll">
+  <table>
+    <tr><th>Niveau</th><th>Objet</th><th>Ordre de grandeur</th><th>Observable avec</th></tr>
+    <tr><td>Organisme / organe</td><td>Bulbe d'oignon, joue</td><td>cm</td><td>œil nu, loupe</td></tr>
+    <tr><td>Tissu</td><td>Épiderme d'oignon</td><td>0,1 – 1 mm</td><td>optique</td></tr>
+    <tr><td>Cellule</td><td>Animale / végétale</td><td>10 – 30 µm / 50 – 200 µm</td><td>optique, MEB (surface)</td></tr>
+    <tr><td>Organite</td><td>Noyau, mitochondrie, chloroplaste</td><td>5 – 10 µm / 1 – 2 µm / 3 – 10 µm</td><td>optique (noyau), MET</td></tr>
+    <tr><td>Membrane</td><td>Bicouche de phospholipides</td><td>7 – 10 nm d'épaisseur</td><td>MET (aspect « 3 feuillets »)</td></tr>
+    <tr><td>Molécule</td><td>Glucose, eau</td><td>≈ 1 nm, ≈ 0,3 nm</td><td>non visibles directement</td></tr>
+  </table></div>
+</section>
+
+<!-- ============ MICROSCOPES ============ -->
+<section id="microscopes">
+  <h2>2. Trois microscopes, trois façons de « voir »</h2>
+  <div class="card scroll"><svg viewBox="0 0 1000 330" role="img" aria-label="Principe des trois microscopes">
+    <defs><marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#12303a"/></marker></defs>
+    <g transform="translate(0,0)">
+      <text x="145" y="22" text-anchor="middle" font-weight="700" font-size="16">Optique</text>
+      <circle cx="145" cy="48" r="12" fill="#ffd54a" stroke="#c9a100"/><text x="165" y="52" font-size="12">source de lumière</text>
+      <line x1="145" y1="62" x2="145" y2="96" stroke="#12303a" marker-end="url(#ar)"/>
+      <ellipse cx="145" cy="108" rx="34" ry="8" fill="#bfe3f5" stroke="#2b7bb9"/><text x="185" y="112" font-size="12">condenseur (verre)</text>
+      <rect x="105" y="136" width="80" height="6" fill="#8a6d3b"/><text x="195" y="143" font-size="12">échantillon mince</text>
+      <line x1="145" y1="120" x2="145" y2="162" stroke="#12303a" marker-end="url(#ar)"/>
+      <ellipse cx="145" cy="176" rx="26" ry="7" fill="#bfe3f5" stroke="#2b7bb9"/><text x="180" y="180" font-size="12">objectif</text>
+      <line x1="145" y1="184" x2="145" y2="226" stroke="#12303a" marker-end="url(#ar)"/>
+      <ellipse cx="145" cy="238" rx="20" ry="6" fill="#bfe3f5" stroke="#2b7bb9"/><text x="172" y="242" font-size="12">oculaire</text>
+      <text x="145" y="290" text-anchor="middle" font-size="13">œil / caméra : image en couleurs</text>
+    </g>
+    <g transform="translate(290,0)">
+      <text x="145" y="22" text-anchor="middle" font-weight="700" font-size="16">MET (transmission)</text>
+      <rect x="125" y="34" width="40" height="22" rx="4" fill="#d9cdf0" stroke="#6a4c93"/><text x="175" y="50" font-size="12">canon à électrons</text>
+      <line x1="145" y1="56" x2="145" y2="94" stroke="#6a4c93" marker-end="url(#ar)"/>
+      <ellipse cx="145" cy="106" rx="30" ry="7" fill="#eee" stroke="#6a4c93"/><text x="182" y="110" font-size="12">lentilles électromagnétiques</text>
+      <rect x="105" y="140" width="80" height="5" fill="#8a6d3b"/><text x="195" y="147" font-size="12">coupe ultrafine (≈ 70 nm)</text>
+      <line x1="145" y1="118" x2="145" y2="168" stroke="#6a4c93" marker-end="url(#ar)"/>
+      <ellipse cx="145" cy="180" rx="26" ry="7" fill="#eee" stroke="#6a4c93"/><text x="180" y="184" font-size="12">lentille projective</text>
+      <line x1="145" y1="190" x2="145" y2="232" stroke="#6a4c93" marker-end="url(#ar)"/>
+      <rect x="105" y="236" width="80" height="8" fill="#9fe38a" stroke="#4a8"/><text x="195" y="244" font-size="12">écran fluorescent / caméra</text>
+      <text x="145" y="290" text-anchor="middle" font-size="13">électrons traversent : image en noir et blanc</text>
+    </g>
+    <g transform="translate(610,0)">
+      <text x="145" y="22" text-anchor="middle" font-weight="700" font-size="16">MEB (balayage)</text>
+      <rect x="125" y="34" width="40" height="22" rx="4" fill="#fbdcc0" stroke="#e07a1f"/><text x="175" y="50" font-size="12">canon à électrons</text>
+      <line x1="145" y1="56" x2="145" y2="94" stroke="#e07a1f" marker-end="url(#ar)"/>
+      <rect x="118" y="100" width="54" height="12" fill="#eee" stroke="#e07a1f"/><text x="180" y="110" font-size="12">bobines de balayage</text>
+      <line x1="145" y1="112" x2="145" y2="176" stroke="#e07a1f" marker-end="url(#ar)"/>
+      <path d="M95 196 q50 -30 100 0 z" fill="#c9a76a" stroke="#8a6d3b"/><text x="205" y="198" font-size="12">surface de l'échantillon</text><text x="205" y="212" font-size="12">(métallisée à l'or)</text>
+      <line x1="195" y1="188" x2="226" y2="150" stroke="#e07a1f" stroke-dasharray="3 3" marker-end="url(#ar)"/>
+      <rect x="226" y="136" width="30" height="14" fill="#9fe38a" stroke="#4a8"/><text x="262" y="147" font-size="12">détecteur</text><text x="262" y="160" font-size="12">(électrons secondaires)</text>
+      <text x="145" y="290" text-anchor="middle" font-size="13">balayage de la surface : image en relief</text>
+    </g>
+  </svg></div>
+
+  <div class="card scroll"><table>
+    <tr><th></th><th><span class="tag t-opt">Optique</span></th><th><span class="tag t-met">MET</span></th><th><span class="tag t-meb">MEB</span></th></tr>
+    <tr><td><b>Rayonnement</b></td><td>lumière visible</td><td>faisceau d'électrons</td><td>faisceau d'électrons</td></tr>
+    <tr><td><b>Lentilles</b></td><td>verre</td><td>électromagnétiques</td><td>électromagnétiques</td></tr>
+    <tr><td><b>Résolution (ordre de grandeur)</b></td><td>≈ 0,2 µm (200 nm)</td><td>≈ 0,1 – 1 nm</td><td>≈ 1 – 10 nm</td></tr>
+    <tr><td><b>Grossissement utile</b></td><td>jusqu'à ≈ × 1 500</td><td>10³ à plus de 10⁶</td><td>≈ × 10 à × 300 000</td></tr>
+    <tr><td><b>Échantillon</b></td><td>mince, peut être vivant, coloré (bleu de méthylène, iode)</td><td>coupe ultrafine, fixée, sous vide</td><td>surface, déshydratée, métallisée, sous vide</td></tr>
+    <tr><td><b>On voit</b></td><td>forme des cellules, noyau, paroi, vacuole</td><td>ultrastructure : organites, membranes</td><td>relief de la surface (3D apparent)</td></tr>
+    <tr><td><b>Image</b></td><td>couleurs réelles ou colorants</td><td>noir et blanc (couleurs ajoutées après)</td><td>noir et blanc (souvent colorisée)</td></tr>
+  </table></div>
+  <div class="note"><b>Résolution ≠ grossissement.</b> La résolution est la plus petite distance entre deux points qu'on voit encore séparés. Grossir davantage au-delà de la résolution ne montre aucun détail nouveau. Les couleurs des images en microscopie électronique sont ajoutées par informatique (« fausses couleurs »).</div>
+</section>
+
+<!-- ============ CALCULS ============ -->
+<section id="calcul">
+  <h2>3. Calculer une taille réelle</h2>
+  <div class="grid">
+    <div class="card">
+      <h3>Avec le grossissement</h3>
+      <p>Taille réelle = taille mesurée sur l'image ÷ grossissement</p>
+      <label for="c1m">Taille mesurée sur l'image (mm)</label><input id="c1m" type="number" value="40" step="any">
+      <label for="c1g">Grossissement (objectif × oculaire)</label><input id="c1g" type="number" value="100" step="any">
+      <div class="out" id="c1o"></div>
+    </div>
+    <div class="card">
+      <h3>Avec une barre d'échelle</h3>
+      <p>Taille réelle = (taille de l'objet ÷ longueur de la barre) × valeur de la barre</p>
+      <label for="c2o">Longueur de l'objet mesurée (mm)</label><input id="c2o" type="number" value="15" step="any">
+      <label for="c2b">Longueur de la barre mesurée (mm)</label><input id="c2b" type="number" value="20" step="any">
+      <label for="c2v">Valeur écrite sur la barre (µm)</label><input id="c2v" type="number" value="2" step="any">
+      <div class="out" id="c2o2"></div>
+    </div>
+  </div>
+  <div class="note"><b>Exemple :</b> une cellule d'oignon mesure 40 mm sur le dessin, objectif × 10 et oculaire × 10 → G = 100 → 40 ÷ 100 = 0,4 mm = <b>400 µm</b>. Pour une électronographie, une mitochondrie de 15 mm avec une barre de 20 mm = 2 µm donne 15 ÷ 20 × 2 = <b>1,5 µm</b> (et un grossissement de × 10 000).</div>
+</section>
+
+<!-- ============ PHOTOS ============ -->
+<section id="photos">
+  <h2>4. Observations à comparer</h2>
+  <p class="legend"><span><i style="background:var(--blue)"></i>optique</span><span><i style="background:#6a4c93"></i>MET</span><span><i style="background:var(--orange)"></i>MEB</span></p>
+  <div class="grid">
+    <figure>
+      <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Human%20Cheek%20Cells%20%28Methylene%20Blue%20Stain%29.jpg?width=640" alt="Cellules de joue humaine colorées au bleu de méthylène" loading="lazy" data-page="https://commons.wikimedia.org/wiki/File:Human_Cheek_Cells_(Methylene_Blue_Stain).jpg" onerror="fb(this)">
+      <figcaption><span class="tag t-opt">Optique</span><b>Cellules de joue (animales)</b><br>Bleu de méthylène : noyau sombre, contour de la cellule, cytoplasme clair. Taille d'une cellule ≈ 50 – 70 µm. Pas de paroi.</figcaption>
+    </figure>
+    <figure>
+      <div class="fb">Cellule de joue, contraste de phase et DIC<br><a href="https://www.cellimagelibrary.org/images/12594" target="_blank" rel="noopener">Cell Image Library n° 12594 →</a><br><small>domaine public · barre d'échelle 15 µm</small></div>
+      <figcaption><span class="tag t-opt">Optique</span><b>Même cellule, autre technique</b><br>Le contraste de phase rend visibles des cellules non colorées, donc vivantes.</figcaption>
+    </figure>
+    <figure>
+      <div class="fb">Racine d'oignon colorée à l'acétocarmine (cellules en mitose)<br><a href="https://library.ucsd.edu/dc/object/bb0041612x" target="_blank" rel="noopener">Cell Image Library n° 43552 →</a><br><small>domaine public (CC0)</small></div>
+      <figcaption><span class="tag t-opt">Optique</span><b>Cellules végétales (oignon)</b><br>Noyaux et chromosomes colorés. En version épiderme de bulbe : paroi, noyau, grande vacuole, pas de chloroplastes.</figcaption>
+    </figure>
+    <figure>
+      <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Mitochondria%20EM01.jpg?width=640" alt="Électronographie de mitochondries en coupe" loading="lazy" data-page="https://embryology.med.unsw.edu.au/embryology/index.php/File:Mitochondria_EM01.jpg" onerror="fb(this)">
+      <figcaption><span class="tag t-met">MET</span><b>Mitochondries (tissu pulmonaire)</b><br>Double membrane, crêtes de la membrane interne, matrice. Longueur ≈ 1 – 2 µm. Source : Dartmouth College EM Facility (domaine public).</figcaption>
+    </figure>
+    <figure>
+      <div class="fb">Chloroplaste d'algue verte (Chlamydomonas), empilements de thylakoïdes<br><a href="https://www.cellimagelibrary.org/images/41053" target="_blank" rel="noopener">Cell Image Library n° 41053 →</a><br><small>licence CC BY-NC-SA</small></div>
+      <figcaption><span class="tag t-met">MET</span><b>Chloroplaste</b><br>Les membranes apparaissent comme des lignes parallèles : c'est l'ultrastructure, invisible en optique.</figcaption>
+    </figure>
+    <figure>
+      <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Red%20White%20Blood%20cells.jpg?width=640" alt="Globule rouge, plaquette et lymphocyte observés au MEB" loading="lazy" data-page="https://commons.wikimedia.org/wiki/File:Red_White_Blood_cells.jpg" onerror="fb(this)">
+      <figcaption><span class="tag t-meb">MEB</span><b>Globule rouge, plaquette, lymphocyte</b><br>Relief de la surface, globule rouge en disque biconcave ≈ 7 µm. Source : NCI-Frederick (domaine public).</figcaption>
+    </figure>
+    <figure>
+      <div class="fb">Pollen de fruit de la passion, surface sculptée<br><a href="https://www.cellimagelibrary.org/images/39344" target="_blank" rel="noopener">Cell Image Library n° 39344 →</a><br><small>domaine public · Dartmouth EM Facility</small></div>
+      <figcaption><span class="tag t-meb">MEB</span><b>Grain de pollen</b><br>Cellule végétale vue de l'extérieur : le MEB montre la surface, pas l'intérieur.</figcaption>
+    </figure>
+  </div>
+  <div class="note">Si une photo reste grise : ouvrir le lien source, la télécharger dans un dossier <code>img/</code> du dépôt GitHub et remplacer l'adresse <code>src</code> par <code>img/nom-du-fichier.jpg</code>. Penser à citer l'auteur et la licence.</div>
+
+  <h3>Ce qu'on peut observer, à quelle échelle</h3>
+  <div class="card scroll"><table>
+    <tr><th>Matériel</th><th><span class="tag t-opt">Optique</span></th><th><span class="tag t-met">MET</span></th><th><span class="tag t-meb">MEB</span></th></tr>
+    <tr><td><b>Cellule végétale</b> (épiderme d'oignon)</td><td>× 100 à × 400 : paroi, noyau, vacuole. Cellule ≈ 100 – 400 µm.</td><td>paroi épaisse, membrane plasmique, organites, vacuole</td><td>surface de la paroi, forme des cellules en relief</td></tr>
+    <tr><td><b>Cellule animale</b> (joue)</td><td>× 400 : noyau, membrane, cytoplasme. Cellule ≈ 50 – 70 µm.</td><td>noyau, mitochondries (1 – 2 µm), réticulum, membranes (≈ 8 nm)</td><td>surface cellulaire : microvillosités, cils, forme</td></tr>
+    <tr><td><b>Molécules</b> (eau, glucose)</td><td colspan="3">non visibles : on les étudie par leurs effets (osmose, mesures de concentration) et on les représente par des schémas</td></tr>
+  </table></div>
+</section>
+
+<!-- ============ CELLULES ============ -->
+<section id="cellules">
+  <h2>5. Schémas de cellules (ultrastructure)</h2>
+  <div class="grid">
+    <div class="card"><h3>Cellule animale</h3>
+    <svg viewBox="0 0 640 360" role="img" aria-label="Schéma de cellule animale">
+      <ellipse cx="200" cy="180" rx="170" ry="145" fill="#fdf1e3" stroke="#12303a" stroke-width="3"/>
+      <circle cx="170" cy="170" r="55" fill="#e8d9f5" stroke="#6a4c93" stroke-width="3"/>
+      <circle cx="170" cy="170" r="48" fill="none" stroke="#6a4c93" stroke-dasharray="4 3"/>
+      <circle cx="162" cy="165" r="14" fill="#8e6fb5"/>
+      <g fill="#f6b26b" stroke="#b45f06" stroke-width="1.5">
+        <ellipse cx="290" cy="120" rx="26" ry="12" transform="rotate(-25 290 120)"/>
+        <ellipse cx="290" cy="255" rx="26" ry="12" transform="rotate(20 290 255)"/>
+        <ellipse cx="90" cy="265" rx="24" ry="11" transform="rotate(-15 90 265)"/>
+      </g>
+      <g fill="none" stroke="#b45f06" stroke-width="1.2">
+        <path d="M268 126 q8 -8 12 2 t12 -4 t12 2"/><path d="M268 249 q8 -8 12 2 t12 -4 t12 2"/><path d="M70 270 q8 -8 12 2 t12 -4 t12 2"/>
+      </g>
+      <g fill="none" stroke="#2b7bb9" stroke-width="3">
+        <path d="M232 150 q25 -12 30 8 t-15 28 t18 24"/><path d="M240 150 q25 -12 30 8 t-15 28 t18 24" opacity=".6"/>
+      </g>
+      <g fill="none" stroke="#3a9a5a" stroke-width="4" stroke-linecap="round">
+        <path d="M75 100 q25 -12 50 0"/><path d="M72 112 q27 -12 54 0"/><path d="M75 124 q25 -12 50 0"/><path d="M80 136 q22 -10 42 0"/>
+      </g>
+      <circle cx="140" cy="300" r="10" fill="#e06666" stroke="#990000"/>
+      <g fill="#12303a"><circle cx="250" cy="165" r="2"/><circle cx="257" cy="195" r="2"/><circle cx="244" cy="215" r="2"/><circle cx="262" cy="175" r="2"/></g>
+      <g stroke="#12303a" stroke-width="1" fill="none">
+        <line x1="360" y1="130" x2="395" y2="40"/><line x1="170" y1="150" x2="395" y2="80"/><line x1="162" y1="165" x2="395" y2="120"/>
+        <line x1="310" y1="125" x2="395" y2="160"/><line x1="262" y1="190" x2="395" y2="200"/><line x1="110" y1="110" x2="395" y2="240"/>
+        <line x1="146" y1="294" x2="395" y2="280"/><line x1="200" y1="210" x2="395" y2="320"/>
+      </g>
+      <g font-size="14"><text x="400" y="40">membrane plasmique</text><text x="400" y="82">noyau</text><text x="400" y="124">nucléole</text><text x="400" y="164">mitochondrie</text>
+      <text x="400" y="204">réticulum endoplasmique</text><text x="400" y="244">appareil de Golgi</text><text x="400" y="284">lysosome</text><text x="400" y="324">cytoplasme</text></g>
+    </svg></div>
+
+    <div class="card"><h3>Cellule végétale</h3>
+    <svg viewBox="0 0 640 360" role="img" aria-label="Schéma de cellule végétale">
+      <rect x="30" y="25" width="340" height="310" rx="14" fill="none" stroke="#6b8e23" stroke-width="10"/>
+      <rect x="40" y="35" width="320" height="290" rx="10" fill="#f3f9ea" stroke="#12303a" stroke-width="2"/>
+      <rect x="115" y="75" width="205" height="215" rx="22" fill="#cfe8f6" stroke="#2b7bb9" stroke-width="2"/>
+      <circle cx="78" cy="125" r="24" fill="#e8d9f5" stroke="#6a4c93" stroke-width="3"/><circle cx="73" cy="121" r="8" fill="#8e6fb5"/>
+      <g fill="#6bbf4a" stroke="#3b7d22" stroke-width="1.5">
+        <ellipse cx="150" cy="55" rx="20" ry="9"/><ellipse cx="215" cy="55" rx="20" ry="9"/><ellipse cx="280" cy="55" rx="20" ry="9"/>
+        <ellipse cx="150" cy="312" rx="20" ry="9"/><ellipse cx="240" cy="312" rx="20" ry="9"/>
+      </g>
+      <g fill="#f6b26b" stroke="#b45f06" stroke-width="1.5"><ellipse cx="78" cy="235" rx="15" ry="8" transform="rotate(-20 78 235)"/><ellipse cx="340" cy="190" rx="9" ry="15" transform="rotate(10 340 190)"/></g>
+      <g stroke="#12303a" stroke-width="1" fill="none">
+        <line x1="30" y1="80" x2="395" y2="40"/><line x1="360" y1="100" x2="395" y2="80"/><line x1="320" y1="130" x2="395" y2="120"/>
+        <line x1="290" y1="60" x2="395" y2="160"/><line x1="98" y1="125" x2="395" y2="200"/><line x1="349" y1="195" x2="395" y2="240"/><line x1="60" y1="170" x2="395" y2="280"/>
+      </g>
+      <g font-size="14"><text x="400" y="40">paroi pectocellulosique</text><text x="400" y="84">membrane plasmique</text><text x="400" y="124">vacuole</text>
+      <text x="400" y="164">chloroplaste</text><text x="400" y="204">noyau</text><text x="400" y="244">mitochondrie</text><text x="400" y="284">cytoplasme</text></g>
+    </svg></div>
+  </div>
+  <div class="card scroll"><table>
+    <tr><th>Critère</th><th>Cellule animale</th><th>Cellule végétale</th></tr>
+    <tr><td>Paroi</td><td>absente</td><td>présente (cellulose), cellule rigide</td></tr>
+    <tr><td>Chloroplastes</td><td>absents</td><td>présents dans les parties vertes (photosynthèse)</td></tr>
+    <tr><td>Vacuole</td><td>petites ou absentes</td><td>grande vacuole centrale</td></tr>
+    <tr><td>Forme</td><td>variable, souvent arrondie</td><td>polygonale, fixée par la paroi</td></tr>
+    <tr><td>Commun</td><td colspan="2">membrane plasmique, cytoplasme, noyau (ADN), mitochondries : cellules eucaryotes</td></tr>
+  </table></div>
+</section>
+
+<!-- ============ MEMBRANE ============ -->
+<section id="membrane">
+  <h2>6. La membrane plasmique et les échanges d'eau et de glucose</h2>
+  <p>La membrane est une <b>bicouche de phospholipides</b> d'environ 8 nm, dans laquelle sont insérées des protéines : c'est le modèle de la <b>mosaïque fluide</b>. Elle est à <b>perméabilité sélective</b> : elle laisse passer certaines molécules et en bloque d'autres.</p>
+  <div class="card scroll"><svg id="memSvg" viewBox="0 0 900 420" role="img" aria-label="Membrane plasmique, aquaporine, GLUT et SGLT"></svg></div>
+  <div class="grid">
+    <div class="card"><h3>L'eau : osmose</h3>
+      <p>L'eau traverse la bicouche lentement et surtout par des <b>aquaporines</b>, canaux protéiques. Le transport est <b>passif</b> : sans dépense d'énergie. L'eau va du milieu <b>le moins concentré en solutés</b> (hypotonique) vers le milieu <b>le plus concentré</b> (hypertonique).</p></div>
+    <div class="card"><h3>Le glucose : diffusion facilitée</h3>
+      <p>Le glucose est trop gros et trop polaire pour traverser les lipides. Il passe par des protéines <b>GLUT</b>, dans le sens de son gradient de concentration (du plus concentré au moins concentré). Passif aussi, mais <b>saturable</b> : le nombre de transporteurs est limité.</p></div>
+    <div class="card"><h3>Pour aller plus loin</h3>
+      <p>Dans l'intestin et le rein, <b>SGLT</b> fait entrer le glucose avec du Na⁺ : c'est un cotransport, donc un transport actif secondaire, qui permet de capter le glucose même contre son gradient. L'insuline augmente le nombre de GLUT4 à la surface des cellules musculaires et adipeuses.</p></div>
+  </div>
+
+  <h3>Simulateur d'osmose</h3>
+  <div class="card">
+    <label for="nacl">Concentration en NaCl du milieu extérieur : <span id="naclv"></span></label>
+    <input id="nacl" type="range" min="0" max="30" value="9">
+    <svg viewBox="0 0 520 190" role="img" aria-label="Globule rouge et cellule végétale selon la concentration extérieure" style="margin-top:.5rem">
+      <text x="30" y="16" font-weight="700" font-size="14">Globule rouge</text>
+      <ellipse id="gr" cx="130" cy="95" rx="40" ry="40" fill="#e57373" stroke="#990000" stroke-width="3"/>
+      <ellipse id="gr2" cx="130" cy="95" rx="14" ry="14" fill="#c0392b" opacity=".5"/>
+      <text x="290" y="16" font-weight="700" font-size="14">Cellule végétale</text>
+      <rect id="pw" x="250" y="35" width="130" height="120" rx="6" fill="none" stroke="#6b8e23" stroke-width="7"/>
+      <rect id="pp" x="256" y="41" width="118" height="108" rx="10" fill="#cfe8f6" stroke="#2b7bb9" stroke-width="2"/>
+      <text id="grt" x="130" y="170" text-anchor="middle" font-size="13"></text>
+      <text id="ppt" x="315" y="176" text-anchor="middle" font-size="13"></text>
+    </svg>
+    <div class="out" id="osmo"></div>
+    <p style="font-size:.9rem;margin:.5rem 0 0">Repère simplifié : 0,9 % de NaCl (9 g/L) a la même concentration que le contenu des cellules (milieu isotonique). Dans ce simulateur, la vacuole est supposée à cette même valeur.</p>
+  </div>
+</section>
+
+<!-- ============ SUJETS ============ -->
+<section id="sujets">
+  <h2>7. Schémas et exercices qui peuvent être demandés</h2>
+  <div class="card">
+    <h3>Les règles d'un bon schéma</h3>
+    <ul style="margin:.2rem 0 0 1.1rem;padding:0">
+      <li><b>Titre</b> en haut, qui dit ce qu'on a observé et avec quel instrument.</li>
+      <li><b>Échelle ou grossissement</b> toujours indiqué (« × 400 » ou une barre « 10 µm »).</li>
+      <li>Dessin au <b>crayon</b>, traits nets, grande taille, sans ombrage ni remplissage inutile.</li>
+      <li><b>Légendes</b> horizontales, écrites à la règle, avec des traits qui ne se croisent pas, alignées à droite.</li>
+      <li>On ne dessine que ce qu'on voit, pas ce qu'on sait.</li>
+    </ul>
+  </div>
+
+  <details><summary>Sujet 1 – Dessin d'observation d'épiderme d'oignon (optique) et calcul de la taille d'une cellule</summary>
+    <div class="ans"><b>Attendus :</b>
+      <ul><li>Dessiner 3 à 4 cellules jointives, rectangulaires : paroi, noyau (souvent une tache sombre), vacuole claire.</li>
+      <li>Indiquer le grossissement (objectif × oculaire). Exemple : × 10 × × 10 = × 100.</li>
+      <li>Mesurer la longueur d'une cellule sur le dessin, puis appliquer taille réelle = taille dessinée ÷ G.</li>
+      <li>Conclure sur l'ordre de grandeur : de l'ordre de 0,1 à 0,4 mm.</li></ul></div></details>
+
+  <details><summary>Sujet 2 – Comparer une cellule animale et une cellule végétale observées au microscope optique</summary>
+    <div class="ans"><b>Attendus :</b> deux schémas côte à côte, même échelle, puis un tableau (paroi, forme, vacuole, chloroplastes). Conclusion : deux types de cellules eucaryotes qui partagent noyau, membrane et cytoplasme.</div></details>
+
+  <details><summary>Sujet 3 – Schéma d'interprétation d'une électronographie (MET) de mitochondrie</summary>
+    <div class="ans"><b>Méthode :</b> on repère la barre d'échelle, on calcule le grossissement, on décalque les contours puis on légende.
+      <ul><li>Membrane externe, membrane interne, crêtes, matrice, espace intermembranaire.</li>
+      <li>Calculer la longueur : par exemple 15 mm mesurés, barre 20 mm = 2 µm → 1,5 µm.</li>
+      <li>Justifier : seul le MET montre les membranes, car sa résolution est de l'ordre du nanomètre.</li></ul></div></details>
+
+  <details><summary>Sujet 4 – Tableau ou schéma de choix de l'instrument selon l'objet</summary>
+    <div class="ans">Pour chaque objet (globule rouge, mitochondrie, membrane, surface d'un pollen, noyau), choisir l'instrument et justifier avec la taille de l'objet et la résolution de l'appareil.
+      <ul><li>Noyau (≈ 5 µm) : optique.</li><li>Mitochondrie (≈ 1 µm), mieux en MET pour l'intérieur.</li><li>Membrane (≈ 8 nm) : MET.</li><li>Surface d'un pollen : MEB.</li></ul></div></details>
+
+  <details><summary>Sujet 5 – Schéma de changement d'échelle (de l'organisme à la molécule)</summary>
+    <div class="ans">Série d'encadrés emboîtés : bulbe d'oignon (cm) → épiderme (mm) → cellule (100 µm) → noyau (10 µm) → membrane (10 nm) → molécule (1 nm). Chaque flèche porte l'instrument utilisé et le facteur de grossissement (par exemple × 10, × 100, × 1 000).</div></details>
+
+  <details><summary>Sujet 6 – Schéma fonctionnel de la membrane plasmique : eau et glucose</summary>
+    <div class="ans"><b>À représenter :</b>
+      <ul><li>Bicouche de phospholipides (têtes hydrophiles à l'extérieur, queues hydrophobes à l'intérieur), protéines transmembranaires.</li>
+      <li>Aquaporine avec flèche d'eau, de l'hypotonique vers l'hypertonique.</li>
+      <li>GLUT avec flèche de glucose, du côté le plus concentré vers le moins concentré, légende « diffusion facilitée, sans énergie ».</li>
+      <li>Titre, légende, indication « schéma non à l'échelle ».</li></ul></div></details>
+
+  <details><summary>Sujet 7 – Expérience : globules rouges dans trois solutions de NaCl</summary>
+    <div class="ans"><b>Résultats attendus :</b>
+      <ul><li>Eau distillée ou 0,2 % (hypotonique) : l'eau entre, la cellule gonfle et peut éclater (hémolyse).</li>
+      <li>0,9 % (isotonique) : pas d'échange net d'eau, forme normale.</li>
+      <li>3 % (hypertonique) : l'eau sort, la cellule rétrécit et devient crénelée.</li>
+      <li>Pour une cellule végétale en milieu hypertonique : décollement de la membrane contre la paroi, c'est la plasmolyse. En milieu hypotonique : turgescence.</li></ul>
+      Un schéma avant / après, avec des flèches pour le flux d'eau, est attendu.</div></details>
+
+  <details><summary>Sujet 8 – Exploiter un graphique : vitesse d'entrée du glucose selon sa concentration</summary>
+    <div class="ans">Une courbe qui monte puis forme un <b>plateau</b> indique un transport par protéines saturables (diffusion facilitée GLUT). Une droite sans plateau indique une diffusion simple. Il faut commenter : le plateau correspond à tous les transporteurs occupés.</div></details>
+</section>
+
+<!-- ============ SOURCES ============ -->
+<section id="sources">
+  <h2>8. Sources et crédits</h2>
+  <div class="card" style="font-size:.95rem">
+    <ul style="margin:0 0 0 1.1rem;padding:0">
+      <li>Cell Image Library (UC San Diego) : <a href="https://www.cellimagelibrary.org/images/12594" target="_blank" rel="noopener">n° 12594</a>, <a href="https://library.ucsd.edu/dc/object/bb0041612x" target="_blank" rel="noopener">n° 43552</a>, <a href="https://www.cellimagelibrary.org/images/41053" target="_blank" rel="noopener">n° 41053</a>, <a href="https://www.cellimagelibrary.org/images/39344" target="_blank" rel="noopener">n° 39344</a>.</li>
+      <li>Wikimedia Commons : cellules de joue (bleu de méthylène), « Red White Blood cells » (NCI-Frederick).</li>
+      <li>Mitochondries : Dartmouth College Electron Microscope Facility (Louisa Howard), via <a href="https://embryology.med.unsw.edu.au/embryology/index.php/File:Mitochondria_EM01.jpg" target="_blank" rel="noopener">UNSW Embryology</a>.</li>
+      <li>Schémas : réalisés pour ce TP (SVG), non à l'échelle sauf l'axe logarithmique.</li>
+    </ul>
+    <p style="margin:.6rem 0 0">Les ordres de grandeur sont arrondis : vérifier avec le cours et les données fournies dans l'énoncé du TP.</p>
+  </div>
+</section>
+
+</main>
+<footer><div class="in">Page pédagogique à usage scolaire · Police Roboto Condensed (Google Fonts)</div></footer>
+
+<script>
+/* ---------- fallback photos ---------- */
+function fb(img){
+  var d=document.createElement('div'); d.className='fb';
+  d.innerHTML='Photo non chargée.<br><a target="_blank" rel="noopener" href="'+img.dataset.page+'">Ouvrir la page source →</a>';
+  img.replaceWith(d);
+}
+
+/* ---------- échelle logarithmique ---------- */
+(function(){
+  var s=document.getElementById('scaleSvg'), NS='http://www.w3.org/2000/svg', h='';
+  function X(m){return 45+(Math.log10(m)+10)*112;}
+  var ticks=[[-10,'0,1 nm'],[-9,'1 nm'],[-8,'10 nm'],[-7,'100 nm'],[-6,'1 µm'],[-5,'10 µm'],[-4,'100 µm'],[-3,'1 mm']];
+  h+='<line x1="30" y1="180" x2="850" y2="180" stroke="#12303a" stroke-width="3"/>';
+  ticks.forEach(function(t){var x=X(Math.pow(10,t[0]));
+    h+='<line x1="'+x+'" y1="174" x2="'+x+'" y2="186" stroke="#12303a" stroke-width="2"/>'+
+       '<text x="'+x+'" y="202" text-anchor="middle" font-size="12" font-weight="700" fill="#0b4f4a">'+t[1]+'</text>';});
+  var it=[[1e-10,'atome','≈ 0,1 nm',140,1],[2.8e-10,'molécule d\u2019eau','≈ 0,3 nm',225,0],[1e-9,'glucose','≈ 1 nm',105,0],
+    [8e-9,'membrane (épaisseur)','7 – 10 nm',260,0],[2.5e-8,'ribosome','≈ 25 nm',70,0],[1e-7,'virus','≈ 100 nm',225,0],
+    [1.5e-6,'mitochondrie','1 – 2 µm',140,0],[2e-6,'bactérie','1 – 5 µm',295,0],[7e-6,'globule rouge','≈ 7 µm',70,0],
+    [2e-5,'cellule animale','10 – 30 µm',225,0],[1e-4,'cellule végétale','50 – 200 µm',105,0]];
+  it.forEach(function(o){var x=X(o[0]),y=o[3],up=y<180,an=o[4]?'start':'middle';
+    h+='<line x1="'+x+'" y1="180" x2="'+x+'" y2="'+(up?y+16:y-14)+'" stroke="#e07a1f" stroke-width="1.5"/><circle cx="'+x+'" cy="180" r="4.5" fill="#e07a1f"/>'+
+       '<text x="'+(o[4]?x-4:x)+'" y="'+y+'" text-anchor="'+an+'" font-size="13" font-weight="700">'+o[1]+'</text>'+
+       '<text x="'+(o[4]?x-4:x)+'" y="'+(y+14)+'" text-anchor="'+an+'" font-size="12" fill="#4d6670">'+o[2]+'</text>';});
+  [[2e-10,1e-6,'MET : ≈ 0,2 nm → 1 µm (coupes ultrafines)','#6a4c93',345],[5e-9,1e-3,'MEB : ≈ 5 nm → 1 mm (surfaces)','#e07a1f',371],
+   [2e-7,1e-3,'Optique : ≈ 0,2 µm → 1 mm','#2b7bb9',397]].forEach(function(b){
+    var x1=X(b[0]),x2=X(b[1]);
+    h+='<rect x="'+x1+'" y="'+b[4]+'" width="'+(x2-x1)+'" height="20" rx="5" fill="'+b[3]+'"/>'+
+       '<text x="'+(x1+8)+'" y="'+(b[4]+14)+'" font-size="12" font-weight="700" style="fill:#fff">'+b[2]+'</text>';});
+  s.innerHTML=h;
+})();
+
+/* ---------- membrane ---------- */
+(function(){
+  var s=document.getElementById('memSvg'), h='';
+  h+='<defs><marker id="ma" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#12303a"/></marker></defs>';
+  h+='<rect x="0" y="0" width="900" height="150" fill="#eaf5fb"/><rect x="0" y="250" width="900" height="170" fill="#fdf3e4"/>';
+  var skip=[[215,285],[560,640],[760,850]];
+  for(var x=72;x<890;x+=22){
+    var bad=skip.some(function(r){return x>r[0]&&x<r[1];}); if(bad) continue;
+    h+='<g stroke="#b8860b" stroke-width="2" fill="none"><path d="M'+(x-3)+' 168 q-3 12 0 18 t0 18"/><path d="M'+(x+3)+' 168 q3 12 0 18 t0 18"/>'+
+       '<path d="M'+(x-3)+' 232 q-3 -12 0 -18 t0 -18"/><path d="M'+(x+3)+' 232 q3 -12 0 -18 t0 -18"/></g>'+
+       '<circle cx="'+x+'" cy="160" r="9" fill="#f2c14e" stroke="#b8860b"/><circle cx="'+x+'" cy="240" r="9" fill="#f2c14e" stroke="#b8860b"/>';
+  }
+  /* cholestérol */
+  [[127,'b'],[420,'b'],[500,'t']].forEach(function(c){var y=c[1]=='t'?178:198;
+    h+='<rect x="'+(c[0]-3)+'" y="'+y+'" width="6" height="26" rx="3" fill="#d9822b"/>';});
+  /* aquaporine */
+  h+='<rect x="215" y="146" width="28" height="108" rx="8" fill="#7e9fd1" stroke="#3a5a8c" stroke-width="2"/>'+
+     '<rect x="257" y="146" width="28" height="108" rx="8" fill="#7e9fd1" stroke="#3a5a8c" stroke-width="2"/>';
+  [[250,100],[250,128],[250,200],[250,300],[250,330]].forEach(function(p){h+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="5" fill="#2b7bb9"/>';});
+  h+='<line x1="250" y1="60" x2="250" y2="360" stroke="#12303a" stroke-width="1.5" marker-end="url(#ma)" stroke-dasharray="1 0"/>';
+  h+='<circle cx="215" cy="75" r="4" fill="#2b7bb9"/><circle cx="288" cy="95" r="4" fill="#2b7bb9"/><circle cx="212" cy="320" r="4" fill="#2b7bb9"/>';
+  /* GLUT */
+  h+='<path d="M560 146 h30 v108 h-30 z" fill="#d18ab8" stroke="#8c3f73" stroke-width="2"/><path d="M610 146 h30 v108 h-30 z" fill="#d18ab8" stroke="#8c3f73" stroke-width="2"/>';
+  function hex(cx,cy,r){var p=[];for(var i=0;i<6;i++){p.push((cx+r*Math.cos(i*Math.PI/3)).toFixed(1)+','+(cy+r*Math.sin(i*Math.PI/3)).toFixed(1));}
+    return '<polygon points="'+p.join(' ')+'" fill="#f28c28" stroke="#a85200" stroke-width="1.5"/>';}
+  [[520,40],[560,70],[640,50],[680,95],[600,105],[470,100],[420,60],[700,30],[545,115]].forEach(function(g){h+=hex(g[0],g[1],8);});
+  h+=hex(600,200,8)+hex(600,330,8)+hex(540,340,8);
+  h+='<line x1="600" y1="115" x2="600" y2="360" stroke="#12303a" stroke-width="1.5" marker-end="url(#ma)"/>';
+  /* SGLT */
+  h+='<path d="M760 146 h38 v108 h-38 z" fill="#6bbf9a" stroke="#2f7f5f" stroke-width="2"/><path d="M812 146 h38 v108 h-38 z" fill="#6bbf9a" stroke="#2f7f5f" stroke-width="2"/>';
+  h+=hex(805,70,8)+'<circle cx="780" cy="80" r="7" fill="#9b59b6"/><text x="780" y="84" text-anchor="middle" font-size="9" style="fill:#fff">Na⁺</text>'+
+     '<circle cx="830" cy="105" r="7" fill="#9b59b6"/><text x="830" y="109" text-anchor="middle" font-size="9" style="fill:#fff">Na⁺</text>';
+  h+='<line x1="805" y1="115" x2="805" y2="360" stroke="#12303a" stroke-width="1.5" marker-end="url(#ma)"/>';
+  /* labels */
+  h+='<g font-size="14"><text x="12" y="22" font-weight="700">Milieu extracellulaire</text><text x="12" y="410" font-weight="700">Cytoplasme</text>'+
+     '<text x="262" y="22">aquaporine</text><text x="262" y="40" style="font-size:12px;fill:#4d6670">eau : osmose</text>'+
+     '<text x="600" y="22" text-anchor="middle">GLUT (uniport)</text><text x="600" y="40" text-anchor="middle" style="font-size:12px;fill:#4d6670">diffusion facilitée</text>'+
+     '<text x="805" y="22" text-anchor="middle">SGLT (cotransport)</text><text x="805" y="40" text-anchor="middle" style="font-size:12px;fill:#4d6670">transport actif secondaire</text>'+
+     '<text x="12" y="62" style="font-size:12px;fill:#4d6670">glucose et eau : plus concentrés</text>'+
+     '<text x="12" y="335" style="font-size:12px;fill:#4d6670">glucose : moins concentré</text>'+
+     '<text x="880" y="400" text-anchor="end" style="font-size:12px;fill:#4d6670">schéma non à l\u2019échelle</text></g>';
+  /* légendes avec traits */
+  h+='<g stroke="#12303a" stroke-width="1" fill="none"><line x1="83" y1="118" x2="83" y2="152"/><line x1="83" y1="288" x2="83" y2="212"/><line x1="127" y1="288" x2="127" y2="224"/></g>'+
+     '<g style="font-size:12px"><text x="12" y="112" style="fill:#7a5b00;font-weight:700">têtes hydrophiles</text>'+
+     '<text x="12" y="302" style="fill:#7a5b00;font-weight:700">queues hydrophobes</text>'+
+     '<text x="112" y="318" style="fill:#a85200;font-weight:700">cholestérol</text></g>';
+  /* accolade épaisseur */
+  h+='<g stroke="#12303a" stroke-width="1.5" fill="none"><line x1="44" y1="150" x2="44" y2="250"/><line x1="38" y1="150" x2="50" y2="150"/><line x1="38" y1="250" x2="50" y2="250"/></g>'+
+     '<text x="30" y="200" text-anchor="middle" transform="rotate(-90 30 200)" style="font-size:12px;font-weight:700">≈ 8 nm</text>';
+  s.innerHTML=h;
+})();
+
+/* ---------- calculateurs ---------- */
+function fmt(v){return Number(v.toPrecision(3)).toLocaleString('fr-FR');}
+function calc(){
+  var m=parseFloat(document.getElementById('c1m').value),g=parseFloat(document.getElementById('c1g').value);
+  var o=document.getElementById('c1o');
+  if(m>=0&&g>0){var um=m/g*1000;o.textContent='Taille réelle = '+fmt(um)+' µm  ('+fmt(um/1000)+' mm)';}else o.textContent='Renseigner les deux valeurs.';
+  var a=parseFloat(document.getElementById('c2o').value),b=parseFloat(document.getElementById('c2b').value),v=parseFloat(document.getElementById('c2v').value);
+  var o2=document.getElementById('c2o2');
+  if(a>=0&&b>0&&v>0){var r=a/b*v;o2.textContent='Taille réelle = '+fmt(r)+' µm  ·  grossissement ≈ × '+fmt(b/(v/1000));}else o2.textContent='Renseigner les trois valeurs.';
+}
+['c1m','c1g','c2o','c2b','c2v'].forEach(function(id){document.getElementById(id).addEventListener('input',calc);});calc();
+
+/* ---------- osmose ---------- */
+function osmo(){
+  var c=document.getElementById('nacl').value/10;
+  document.getElementById('naclv').textContent=c.toFixed(1).replace('.',',')+' % (NaCl)';
+  var gr=document.getElementById('gr'),gr2=document.getElementById('gr2'),r,txt,flux;
+  if(c<0.9){var f=1+(0.9-c)*0.4;r=40*Math.min(f,1.36);}else{r=40*Math.max(0.7,1-(c-0.9)*0.14);}
+  gr.setAttribute('rx',r);gr.setAttribute('ry',r);gr2.setAttribute('rx',r*0.35);gr2.setAttribute('ry',r*0.35);
+  gr.setAttribute('stroke-dasharray',c>1.4?'4 3':'0');gr.setAttribute('stroke-width',c>1.4?5:3);
+  var s=c<=0.9?1:Math.max(0.55,1-(c-0.9)*0.2);
+  var pp=document.getElementById('pp'),w=118*s,hh=108*s;
+  pp.setAttribute('width',w);pp.setAttribute('height',hh);pp.setAttribute('x',315-w/2);pp.setAttribute('y',95-hh/2);
+  var t=document.getElementById('grt'),pt=document.getElementById('ppt'),o=document.getElementById('osmo');
+  if(c<0.8){t.textContent=c<0.3?'hémolyse possible (éclatement)':'gonflée';pt.textContent='turgescente';
+    o.textContent='Milieu extérieur hypotonique : l\u2019eau entre dans les cellules (flux vers l\u2019intérieur).';}
+  else if(c<=1.0){t.textContent='forme normale';pt.textContent='turgescence normale';
+    o.textContent='Milieu isotonique : pas de flux net d\u2019eau, les cellules gardent leur volume.';}
+  else{t.textContent=c>1.4?'rétrécie, crénelée':'qui rétrécit';pt.textContent='plasmolyse';
+    o.textContent='Milieu extérieur hypertonique : l\u2019eau sort des cellules (flux vers l\u2019extérieur).';}
+}
+document.getElementById('nacl').addEventListener('input',osmo);osmo();
+</script>
+</body>
+</html>
